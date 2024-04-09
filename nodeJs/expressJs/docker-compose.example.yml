@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  expressjs:
+    build: .
+    image: ${IMAGE_NAME}
+    container_name: productStore_1
+    mem_limit: 1g
+    ports:
+      - 3001:3000
+    environment:
+      MONGO_PORT: 27017
+      MONGO_HOST: mongoDb
+      MONGO_USER: admin
+      MONGO_PASSWORD: example
+      MONGO_DB_NAME: test
+      POSTGRE_HOST: postgreSql
+      POSTGRE_PORT: 5432
+      POSTGRE_USER: admin
+      POSTGRE_PASSWORD: example
+      POSTGRE_DB_NAME: test
+      POSTGRE_SYNC: false
+      POSTGRE_LOGGING: true
+      JWT_SECRET: RMrXGzbSBFSKU36kgCW6Nrz3wQCfiwWVChB3bgbe73wvBHvut8thyuU2be55i2gMKHjRjcUZtj2dRjRM
+      JWT_EXPIRE_IN: 10M
+    depends_on:
+      - mongoDb
+      - postgreSql
+    volumes:
+      - .:/usr/src
+      - /usr/src/node_modules
+    command: npx nodemon --inspect src/app.ts
+  mongoDb:
+    image: mongo:5.0.25-focal
+    container_name: mongoTest_1
+    mem_limit: 1g
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: example
+  postgreSql:
+    image: postgres:11.7
+    container_name: postgresTest_1
+    mem_limit: 1g
+    ports:
+      - '5435:5432'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: test

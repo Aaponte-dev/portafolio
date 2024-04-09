@@ -1,0 +1,6 @@
+{
+    "verbose": true,
+    "execMap": {
+        "ts": "node --env-file .env --require ts-node/register"
+    }
+}

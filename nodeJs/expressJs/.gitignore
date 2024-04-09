@@ -1,0 +1,6 @@
+.vscode
+.dccache
+node_modules
+dist
+dataSource.ts
+docker-compose.yml
